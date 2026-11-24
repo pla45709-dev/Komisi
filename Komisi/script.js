@@ -31,6 +31,16 @@ function moveDockIndicator(item, animate = true) {
   }
 }
 
+const initialDockItem = Array.from(dockItems).find((item) => item.getAttribute("href") === window.location.hash);
+if (initialDockItem) {
+  dockItems.forEach((item) => {
+    item.classList.remove("is-active");
+    item.removeAttribute("aria-current");
+  });
+  initialDockItem.classList.add("is-active");
+  initialDockItem.setAttribute("aria-current", "page");
+}
+
 const savedTheme = localStorage.getItem("komisi-theme");
 const preferredTheme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
 const initialTheme = savedTheme || preferredTheme;

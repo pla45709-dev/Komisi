@@ -10,6 +10,9 @@
   --glow: #8a8a8a;
   --shadow: rgba(0, 0, 0, 0.38);
   --dock: rgba(20, 20, 20, 0.94);
+  --dock-indicator: #f5f6f7;
+  --dock-active-text: #17191d;
+  --dock-hover-text: #f4f4f2;
 }
 
 html[data-theme="light"] {
@@ -24,6 +27,9 @@ html[data-theme="light"] {
   --glow: #8a8a8a;
   --shadow: rgba(63, 63, 63, 0.12);
   --dock: rgba(255, 255, 255, 0.94);
+  --dock-indicator: #e8e8e5;
+  --dock-active-text: #171717;
+  --dock-hover-text: #151515;
 }
 
 * { box-sizing: border-box; }
@@ -379,10 +385,10 @@ html[data-theme="light"] .icon--sun { display: block; }
   left: 50%;
   bottom: 22px;
   translate: -50% 0;
-  min-width: min(620px, calc(100% - 32px));
+  min-width: min(700px, calc(100% - 32px));
   height: 64px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   align-items: center;
   gap: 4px;
   padding: 6px;
@@ -398,10 +404,10 @@ html[data-theme="light"] .icon--sun { display: block; }
   z-index: 1;
   left: 6px;
   top: 6px;
-  width: var(--indicator-width, calc((100% - 12px) / 3));
+  width: var(--indicator-width, calc((100% - 28px) / 5));
   height: 52px;
   border-radius: 999px;
-  background: #f5f6f7;
+  background: var(--dock-indicator);
   box-shadow: 0 5px 18px rgba(0,0,0,.18), 0 0 16px rgba(255,255,255,.12);
   transform: translateX(var(--indicator-x, 0));
   pointer-events: none;
@@ -419,6 +425,7 @@ html[data-theme="light"] .icon--sun { display: block; }
 .dock__item {
   position: relative;
   z-index: 2;
+  min-width: 0;
   height: 52px;
   display: flex;
   align-items: center;
@@ -429,6 +436,7 @@ html[data-theme="light"] .icon--sun { display: block; }
   text-decoration: none;
   font-size: 12px;
   font-weight: 700;
+  white-space: nowrap;
   transition: color 250ms ease, background 250ms ease, transform 250ms ease;
 }
 .dock__item svg {
@@ -440,8 +448,10 @@ html[data-theme="light"] .icon--sun { display: block; }
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.dock__item:hover { color: #fff; transform: translateY(-2px); }
-.dock__item.is-active { color: #17191d; }
+.dock__item:hover:not(.is-active) { color: var(--dock-hover-text); transform: translateY(-2px); }
+.dock__item.is-active,
+.dock__item.is-active:hover { color: var(--dock-active-text); }
+.dock__item:focus-visible { outline: 2px solid currentColor; outline-offset: -3px; }
 
 @keyframes gridDrift { to { transform: perspective(700px) rotateX(58deg) rotateZ(-8deg) translateY(26%); } }
 @keyframes orbFloat { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-24px,18px) scale(1.04); } }
