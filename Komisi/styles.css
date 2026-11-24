@@ -471,6 +471,9 @@ html[data-theme="light"] .icon--sun { display: block; }
   .brand__name { display: none; }
   .dock { height: 58px; }
   .dock__item { height: 46px; }
+}
+
+@media (max-width: 640px) {
   .dock__item span { display: none; }
 }
 
